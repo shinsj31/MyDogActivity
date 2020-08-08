@@ -1,4 +1,17 @@
-﻿<?php
+<?
+funtion query_reuslt ( $count ){
+  if($count>0){
+      echo 'success';
+  }
+  else{
+      echo 'false';
+  }
+  return $count;
+}
+?>
+
+
+<?php
 
 try{
  $option = array(
