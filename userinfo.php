@@ -27,7 +27,7 @@ $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION); // 에러 출력
     생성, 비밀번호 변경, 탈퇴
 */
     case 'login':
-        $stmt = $dbh->prepare('SELECT * FROM user WHERE u_id = :u_id AND pw = :u_pw ');
+        $stmt = $dbh->prepare('SELECT * FROM user WHERE u_id = :u_id AND u_pw = :u_pw ');
         $stmt->bindParam(':u_id',$u_id);
         $stmt->bindParam(':u_pw',$u_pw);
 
@@ -48,7 +48,7 @@ $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION); // 에러 출력
 
         break;
     case 'join': // 가입
-        $stmt = $dbh->prepare('INSERT INTO user (u_id, u_pw) VALUES (:u_id, :u_pw)');
+        $stmt = $dbh->prepare('INSERT INTO user (u_id, pw) VALUES (:u_id, :u_pw)');
         $stmt->bindParam(':u_id',$u_id);
         $stmt->bindParam(':u_pw',$u_pw);
 
@@ -65,36 +65,11 @@ $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION); // 에러 출력
 
         $count = $stmt->rowCount();
 
-        if($count>0){
-
-            $stmt = $dbh->prepare('INSERT INTO member (u_id, m_name , m_phone , m_email ) VALUES (:u_id, :m_name , :m_phone , :m_email)');
-            $stmt->bindParam(':u_id',$u_id);
-            $stmt->bindParam(':m_name',$m_name);
-            $stmt->bindParam(':m_phone',$m_phone);
-            $stmt->bindParam(':m_email',$m_email);
-
-            $u_id = $_POST['u_id'];
-            $m_name = $_POST['m_name'];
-            $m_phone = $_POST['m_phone'];
-            $m_email = $_POST['m_email'];
-
-            try {
-                $stmt->execute();
-            }
-            catch (PDOException $e){
-                echo $e->getMessage();
-    		    }
-            $count = $stmt->rowCount();
-
-            echo $count > 0 ?  "success" : "false";
-
-        }
+        if($count>0) goto add_member;
         else echo "false";
 
-
-        //header("Location: list.php");
-
         break;
+
     case 'delete': // 탈퇴
         $stmt = $dbh->prepare('DELETE FROM user WHERE u_id = :u_id AND u_pw = :u_pw ');
         $stmt->bindParam(':u_id',$u_id);
@@ -110,7 +85,7 @@ $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION); // 에러 출력
         }
         catch (PDOException $e){
             echo $e->getMessage();
-		}
+		    }
 
         $count = $stmt->rowCount();
 
@@ -141,7 +116,97 @@ $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION); // 에러 출력
         echo $count > 0 ?  "success" : "false";
 
         break;
+      case 'add'
+      add_member:
+        $stmt = $dbh->prepare('INSERT INTO member (u_id, m_name , m_phone , m_email ) VALUES (:u_id, :m_name , :m_phone , :m_email)' );
+        $stmt->bindParam(':u_id',$u_id);
+        $stmt->bindParam(':m_name',$m_name);
+        $stmt->bindParam(':m_phone',$m_phone);
+        $stmt->bindParam(':m_email',$m_email);
 
+        $u_id = $_POST['u_id'];
+        $m_name = $_POST['m_name'];
+        $m_phone = $_POST['m_phone'];
+        $m_email = $_POST['m_email'];
+
+        try {
+          $stmt->execute();
+        }
+        catch (PDOException $e){
+          echo $e->getMessage();
+        }
+        $count = $stmt->rowCount();
+
+        echo $count > 0 ?  "success" : "false";
+
+
+      //header("Location: list.php");
+
+      break;
+      case 'remove': // 멤버 제거
+        $stmt = $dbh->prepare('DELETE FROM member WHERE m_id = :m_id ');
+        $stmt->bindParam(':m_id',$m_id);
+
+        $m_id = $_POST['m_id'];
+
+
+        try {
+            $stmt->execute();
+        }
+        catch (PDOException $e){
+            echo $e->getMessage();
+        }
+
+        $count = $stmt->rowCount();
+
+        echo $count > 0 ?  "success" : "false";
+
+        //header("Location: list.php");
+        break;
+      case 'update' // 멤버 정보 변경
+        $stmt = $dbh->prepare('UPDATE member SET m_name =  m_name , m_phone = :m_phone , m_email = :m_email  WHERE u_id = :u_id AND m_id = :m_id ');
+        $stmt->bindParam(':u_id',$u_id);
+        $stmt->bindParam(':m_id',$m_id);
+        $stmt->bindParam(':m_name',$m_name);
+        $stmt->bindParam(':m_phone',$m_phone);
+        $stmt->bindParam(':m_email',$m_email);
+
+        $u_id = $_POST['u_id'];
+        $m_id = $_POST['m_id'];
+        $m_name = $_POST['m_name'];
+        $m_phone = $_POST['m_phone'];
+        $m_email = $_POST['m_email'];
+
+        try {
+          $stmt->execute();
+        }
+        catch (PDOException $e){
+          echo $e->getMessage();
+        }
+        $count = $stmt->rowCount();
+
+        echo $count > 0 ?  "success" : "false";
+        break;
+      case 'list':// 멤버 정보 보기
+        $stmt = $dbh->prepare('SELECT * FROM member WHERE u_id = :u_id');
+        $stmt->bindParam(':u_id',$u_id);
+        $m_id = $_POST['u_id'];
+
+        try {
+            $stmt->execute();
+        }
+        catch (PDOException $e){
+            echo $e->getMessage();
+        }
+
+        $count = $stmt->rowCount();
+
+        if($count > 0){
+          $list = $stmt->fetchAll(PDO::FETCH_ASSOC);
+          echo json_encode($list);
+        }
+
+        break;
       case 'test':
         $stmt = $dbh->prepare('SELECT * FROM user');
         try {
