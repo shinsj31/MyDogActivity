@@ -1,13 +1,5 @@
 <?php
-funtion query_reuslt ( $count ){
-  if($count>0){
-      echo 'success';
-  }
-  else{
-      echo 'false';
-  }
-  return $count;
-}
+
 
 try{
  $option = array(
@@ -15,7 +7,7 @@ try{
      PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION    //에러출력 옵션 : 에러출력
  );
 
- $dbh = new PDO('mysql:host=localhost;dbname=mydogactivity', 'root', '10qpalzm' , $option);
+$dbh = new PDO('mysql:host=localhost;dbname=mydogactivity', 'root', '10qpalzm' , $option);
 }
 catch(Exception $e) {
  echo$e->getMessage();
