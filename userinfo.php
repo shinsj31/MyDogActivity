@@ -86,7 +86,7 @@ $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION); // 에러 출력
     		    }
             $count = $stmt->rowCount();
 
-            $count > 0 ? echo "success"; : echo "false";
+            echo $count > 0 ?  "success" : "false";
 
         }
         else echo "false";
