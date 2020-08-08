@@ -8,10 +8,6 @@ funtion query_reuslt ( $count ){
   }
   return $count;
 }
-?>
-
-
-<?php
 
 try{
  $option = array(
