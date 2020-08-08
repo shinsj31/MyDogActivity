@@ -4,7 +4,7 @@
         <meta charset="utf-8"/>
     </head>
     <body>
-        <form action="./userinfo.php?mode=join" method="POST">
+        <form action="./userinfo.php?mode=delete" method="POST">
             <p>아이디 : <input type="varchar" name="u_id"></p>
             <p>현재 비밀번호 : <input type="varchar" name="pw"></p>
             <p>변경 비밀번호 : <input type="varchar" name="new_pw"></p>
