@@ -44,7 +44,7 @@ $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION); // 에러 출력
 
 
         $count = $stmt->rowCount();
-        $count > 0 ? echo "success"; : echo "false";
+        echo $count > 0 ?  "success" : "false";
 
         break;
     case 'join': // 가입
@@ -114,7 +114,7 @@ $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION); // 에러 출력
 
         $count = $stmt->rowCount();
 
-        $count > 0 ? echo "success"; : echo "false";
+        echo $count > 0 ?  "success" : "false";
 
         //header("Location: list.php");
         break;
@@ -138,7 +138,7 @@ $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION); // 에러 출력
 
         $count = $stmt->rowCount();
 
-        $count > 0 ? echo "success"; : echo "false";
+        echo $count > 0 ?  "success" : "false";
 
         break;
 
