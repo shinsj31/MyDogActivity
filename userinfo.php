@@ -27,7 +27,7 @@ $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION); // 에러 출력
     생성, 비밀번호 변경, 탈퇴
 */
     case 'login':
-        $stmt = $dbh->prepare('SELECT * FROM user WHERE u_id = :u_id AND u_pw = :u_pw ');
+        $stmt = $dbh->prepare('SELECT * FROM user WHERE u_id = :u_id AND pw = :u_pw ');
         $stmt->bindParam(':u_id',$u_id);
         $stmt->bindParam(':u_pw',$u_pw);
 
@@ -40,15 +40,11 @@ $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION); // 에러 출력
         }
         catch (PDOException $e){
             echo $e->getMessage();
-		        }
+		    }
 
 
         $count = $stmt->rowCount();
-
-        if($count>0){
-            echo 'success';
-        }
-
+        $count > 0 ? echo "success" : echo "false";
 
         break;
     case 'join': // 가입
@@ -67,11 +63,9 @@ $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION); // 에러 출력
             echo $e->getMessage();
 		    }
 
-
         $count = $stmt->rowCount();
 
         if($count>0){
-
 
             $stmt = $dbh->prepare('INSERT INTO member (u_id, m_name , m_phone , m_email ) VALUES (:u_id, :m_name , :m_phone , :m_email)');
             $stmt->bindParam(':u_id',$u_id);
@@ -86,19 +80,16 @@ $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION); // 에러 출력
 
             try {
                 $stmt->execute();
-
             }
             catch (PDOException $e){
                 echo $e->getMessage();
     		    }
             $count = $stmt->rowCount();
 
-            if($count>0){
-                echo 'success';
-            }
+            $count > 0 ? echo "success" : echo "false";
 
         }
-
+        else echo "false";
 
 
         //header("Location: list.php");
@@ -123,12 +114,7 @@ $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION); // 에러 출력
 
         $count = $stmt->rowCount();
 
-        if($count>0){
-            echo 'success';
-
-        }else{
-            echo 'false';
-        }
+        $count > 0 ? echo "success" : echo "false";
 
         //header("Location: list.php");
         break;
@@ -148,25 +134,18 @@ $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION); // 에러 출력
         }
         catch (PDOException $e){
             echo $e->getMessage();
-		        }
+		     }
 
         $count = $stmt->rowCount();
 
-        if($count>0){
-            echo 'success';
+        $count > 0 ? echo "success" : echo "false";
 
-        }else{
-            echo 'false';
-        }
-
-        //header("Location: list.php?id={$_POST['id']}");
         break;
-        case 'test':
-        $stmt = $dbh->prepare('SELECT * FROM user');
 
+      case 'test':
+        $stmt = $dbh->prepare('SELECT * FROM user');
         try {
             $stmt->execute();
-
         }
         catch (PDOException $e){
             echo $e->getMessage();
@@ -175,14 +154,7 @@ $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION); // 에러 출력
         $count = $stmt->rowCount();
 
         if($count > 0){
-          $list = $stmt->fetchAll();
-
-          foreach(json_encode($list) as $row) {
-              echo $row['u_id'];
-              echo $row['u_pw'];
-              echo "\n";
-          }
-
+          $list = $stmt->fetchAll(PDO::FETCH_ASSOC);
           echo json_encode($list);
         }
 
