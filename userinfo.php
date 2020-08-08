@@ -161,7 +161,7 @@ $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION); // 에러 출력
             echo $e->getMessage();
         }
 
-        $count = query_reuslt($stmt->rowCount());
+        $count = $stmt->rowCount();
 
         if($count > 0){
           $list = $stmt->fetchAll();
