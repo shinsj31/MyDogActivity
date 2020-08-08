@@ -1,4 +1,4 @@
-<?
+<?php
 funtion query_reuslt ( $count ){
   if($count>0){
       echo 'success';
