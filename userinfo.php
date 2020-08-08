@@ -27,12 +27,12 @@ $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION); // 에러 출력
     생성, 비밀번호 변경, 탈퇴
 */
     case 'login':
-        $stmt = $dbh->prepare('SELECT * FROM user WHERE u_id = :u_id AND pw = :pw ');
+        $stmt = $dbh->prepare('SELECT * FROM user WHERE u_id = :u_id AND u_pw = :u_pw ');
         $stmt->bindParam(':u_id',$u_id);
-        $stmt->bindParam(':pw',$pw);
+        $stmt->bindParam(':u_pw',$u_pw);
 
         $u_id = $_POST['u_id'];
-        $pw = $_POST['pw'];
+        $u_pw = $_POST['u_pw'];
 
         try {
             $stmt->execute();
@@ -40,27 +40,24 @@ $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION); // 에러 출력
         }
         catch (PDOException $e){
             echo $e->getMessage();
-		}
+		        }
 
 
         $count = $stmt->rowCount();
 
         if($count>0){
-
             echo 'success';
-
-        }else{
-            echo 'false';
         }
+
 
         break;
     case 'join': // 가입
-        $stmt = $dbh->prepare('INSERT INTO user (u_id, pw) VALUES (:u_id, :pw)');
+        $stmt = $dbh->prepare('INSERT INTO user (u_id, u_pw) VALUES (:u_id, :u_pw)');
         $stmt->bindParam(':u_id',$u_id);
-        $stmt->bindParam(':pw',$pw);
+        $stmt->bindParam(':u_pw',$u_pw);
 
         $u_id = $_POST['u_id'];
-        $pw = $_POST['pw'];
+        $u_pw = $_POST['u_pw'];
 
         try {
             $stmt->execute();
@@ -68,16 +65,38 @@ $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION); // 에러 출력
         }
         catch (PDOException $e){
             echo $e->getMessage();
-		}
+		    }
 
 
         $count = $stmt->rowCount();
 
         if($count>0){
-            echo 'success';
 
-        }else{
-            echo 'false';
+
+            $stmt = $dbh->prepare('INSERT INTO member (u_id, m_name , m_phone , m_email ) VALUES (:u_id, :m_name , :m_phone , :m_email)');
+            $stmt->bindParam(':u_id',$u_id);
+            $stmt->bindParam(':m_name',$m_name);
+            $stmt->bindParam(':m_phone',$m_phone);
+            $stmt->bindParam(':m_email',$m_email);
+
+            $u_id = $_POST['u_id'];
+            $m_name = $_POST['m_name'];
+            $m_phone = $_POST['m_phone'];
+            $m_email = $_POST['m_email'];
+
+            try {
+                $stmt->execute();
+
+            }
+            catch (PDOException $e){
+                echo $e->getMessage();
+    		    }
+            $count = $stmt->rowCount();
+
+            if($count>0){
+                echo 'success';
+            }
+
         }
 
 
@@ -86,12 +105,12 @@ $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION); // 에러 출력
 
         break;
     case 'delete': // 탈퇴
-        $stmt = $dbh->prepare('DELETE FROM user WHERE u_id = :u_id AND pw = :pw ');
+        $stmt = $dbh->prepare('DELETE FROM user WHERE u_id = :u_id AND u_pw = :u_pw ');
         $stmt->bindParam(':u_id',$u_id);
-        $stmt->bindParam(':pw',$pw);
+        $stmt->bindParam(':u_pw',$u_pw);
 
         $u_id = $_POST['u_id'];
-        $pw = $_POST['pw'];
+        $u_pw = $_POST['u_pw'];
 
 
         try {
@@ -114,13 +133,13 @@ $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION); // 에러 출력
         //header("Location: list.php");
         break;
     case 'modify': // 비밀번호 변경
-        $stmt = $dbh->prepare('UPDATE user SET pw = :new_pw WHERE u_id = :u_id AND pw = :pw');
+        $stmt = $dbh->prepare('UPDATE user SET pw = :new_pw WHERE u_id = :u_id AND pw = :u_pw');
         $stmt->bindParam(':u_id', $u_id);
-        $stmt->bindParam(':pw', $pw);
+        $stmt->bindParam(':u_pw', $u_pw);
         $stmt->bindParam(':new_pw', $new_pw);
 
         $u_id = $_POST['u_id'];
-        $pw = $_POST['pw'];
+        $u_pw = $_POST['u_pw'];
         $new_pw = $_POST['new_pw'];
 
         try {
@@ -157,10 +176,14 @@ $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION); // 에러 출력
 
         if($count > 0){
           $list = $stmt->fetchAll();
-          foreach($list as $row) {
+
+          foreach(json_encode($list) as $row) {
               echo $row['u_id'];
-              echo $row['pw'];
+              echo $row['u_pw'];
+              echo "\n";
           }
+
+          echo json_encode($list);
         }
 
         break;
