@@ -40,7 +40,7 @@ $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION); // 에러 출력
         }
         catch (PDOException $e){
             echo $e->getMessage();
-		    }
+		}
 
 
         $count = $stmt->rowCount();
@@ -48,7 +48,7 @@ $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION); // 에러 출력
 
         break;
     case 'join': // 가입
-        $stmt = $dbh->prepare('INSERT INTO user (u_id, pw) VALUES (:u_id, :u_pw)');
+        $stmt = $dbh->prepare('INSERT INTO user (u_id, u_pw) VALUES (:u_id, :u_pw)');
         $stmt->bindParam(':u_id',$u_id);
         $stmt->bindParam(':u_pw',$u_pw);
 
@@ -61,7 +61,7 @@ $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION); // 에러 출력
         }
         catch (PDOException $e){
             echo $e->getMessage();
-		    }
+		}
 
         $count = $stmt->rowCount();
 
@@ -116,7 +116,7 @@ $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION); // 에러 출력
         echo $count > 0 ?  "success" : "false";
 
         break;
-      case 'add'
+      case 'add':
       add_member:
         $stmt = $dbh->prepare('INSERT INTO member (u_id, m_name , m_phone , m_email ) VALUES (:u_id, :m_name , :m_phone , :m_email)' );
         $stmt->bindParam(':u_id',$u_id);
@@ -163,7 +163,7 @@ $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION); // 에러 출력
 
         //header("Location: list.php");
         break;
-      case 'update' // 멤버 정보 변경
+      case 'update': // 멤버 정보 변경
         $stmt = $dbh->prepare('UPDATE member SET m_name =  m_name , m_phone = :m_phone , m_email = :m_email  WHERE u_id = :u_id AND m_id = :m_id ');
         $stmt->bindParam(':u_id',$u_id);
         $stmt->bindParam(':m_id',$m_id);
@@ -203,7 +203,7 @@ $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION); // 에러 출력
 
         if($count > 0){
           $list = $stmt->fetchAll(PDO::FETCH_ASSOC);
-          echo json_encode($list);
+          echo json_encode($list ,  JSON_UNESCAPED_UNICODE);
         }
 
         break;
@@ -220,7 +220,7 @@ $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION); // 에러 출력
 
         if($count > 0){
           $list = $stmt->fetchAll(PDO::FETCH_ASSOC);
-          echo json_encode($list);
+          echo json_encode($list ,  JSON_UNESCAPED_UNICODE);
         }
 
         break;

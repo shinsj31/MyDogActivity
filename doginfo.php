@@ -29,7 +29,7 @@ $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION); // 에러 출력
     생성, 비밀번호 변경, 탈퇴
 */
     case 'list': // 리스트 불러오기
-        $stmt = $dbh->prepare('SELECT * FROM user WHERE u_id = :u_id');
+        $stmt = $dbh->prepare('SELECT * FROM dog WHERE u_id = :u_id');
         $stmt->bindParam(':u_id',$u_id);
         $u_id = $_POST['u_id'];
 
@@ -40,19 +40,19 @@ $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION); // 에러 출력
             echo $e->getMessage();
 		    }
 
-        $count = query_reuslt($stmt->rowCount());
+          $count = $stmt->rowCount();
 
         if($count>0){
           $list = $stmt->fetchAll(PDO::FETCH_ASSOC);
-          echo json_encode($list);
+          echo json_encode($list ,  JSON_UNESCAPED_UNICODE);
         }
         else echo 'false';
 
         break;
     case 'add': // 추가
         $stmt = $dbh->prepare('INSERT INTO dog (d_name , u_id ) VALUES (:d_name, :u_id)');
-        $stmt->bindParam(':d_name',:d_name);
-        $stmt->bindParam(':u_id',:u_id);
+        $stmt->bindParam(':d_name',$d_name);
+        $stmt->bindParam(':u_id',$u_id);
 
         $d_name = $_POST['d_name'];
         $u_id = $_POST['u_id'];
@@ -64,14 +64,13 @@ $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION); // 에러 출력
           echo $e->getMessage();
         }
 
-        query_reuslt($stmt->rowCount());
+         $count = $stmt->rowCount();
 
         echo $count > 0 ?  "success" : "false";
         //header("Location: list.php");
 
         break;
     case 'delete': // 삭제
-
         $stmt = $dbh->prepare('DELETE FROM dog WHERE u_id = :u_id AND d_id = :d_id ');
         $stmt->bindParam(':u_id',$u_id);
         $stmt->bindParam(':d_id',$d_id);
@@ -85,7 +84,7 @@ $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION); // 에러 출력
         }
         catch (PDOException $e){
             echo $e->getMessage();
-		    }
+		}
 
         $count = $stmt->rowCount();
 
@@ -128,7 +127,7 @@ $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION); // 에러 출력
 
         //header("Location: list.php?id={$_POST['id']}");
         break;
-      case 'info' // 정보를 얻는다
+      case 'info': // 정보를 얻는다
         $stmt = $dbh->prepare('SELECT * FROM dog WHERE d_id = :d_id');
         $stmt->bindParam(':d_id', $d_id);
 
@@ -143,7 +142,7 @@ $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION); // 에러 출력
 
         if($count>0){
             $list = $stmt->fetch(PDO::FETCH_ASSOC);
-            echo json_encode($list);
+            echo json_encode($list ,  JSON_UNESCAPED_UNICODE);
         }
         else echo 'false';
 

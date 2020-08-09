@@ -41,7 +41,7 @@
             <p>아이디 : <input type="varchar" name="u_id"></p>
             <p>개 아이디 : <input type="varchar" name="d_id"></p>
 
-            <p>아이디 : <input type="varchar" name="d_name"></p>
+            <p>이름 : <input type="varchar" name="d_name"></p>
             <p>견종 : <input type="varchar" name="d_breed"></p>
             <p>키 : <input type="varchar" name="d_height"></p>
             <p>길이 : <input type="varchar" name="d_length"></p>
