@@ -29,7 +29,8 @@ $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION); // 에러 출력
     생성, 비밀번호 변경, 탈퇴
 */
     case 'list': // 리스트 불러오기
-        $stmt = $dbh->prepare('SELECT * FROM dog WHERE u_id = :u_id');
+    //select * from user as u join dog as d on u.u_id = d.u_id and u.u_id = 'input';
+        $stmt = $dbh->prepare('SELECT * FROM user AS u JOIN dog AS d ON u.u_id = d.u_id AND u.u_id = :u_id');
         $stmt->bindParam(':u_id',$u_id);
         $u_id = $_POST['u_id'];
 
@@ -38,13 +39,16 @@ $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION); // 에러 출력
         }
         catch (PDOException $e){
             echo $e->getMessage();
-		    }
+		}
 
           $count = $stmt->rowCount();
 
         if($count>0){
           $list = $stmt->fetchAll(PDO::FETCH_ASSOC);
+         
           echo json_encode($list ,  JSON_UNESCAPED_UNICODE);
+
+        
         }
         else echo 'false';
 
