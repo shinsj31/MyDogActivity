@@ -105,9 +105,11 @@ switch($_GET['mode']){
         $stmt->bindParam(':ac_device_id',$ac_device_id);
 
         $d_id = $_POST['d_id'];
-        $ac_date =  date( "Y-m-d", timestamp = time()); //$_POST['ac_date'];
-        $ac_hour =  date( "H", timestamp = time()); //$_POST['ac_hour'];
-        $ac_minute =  date( "i", timestamp = time()); // $_POST['ac_minute'];
+        $times = time();
+        date_default_timezone_set("Asia/Seoul"); // 한국 시간으로 변경
+        $ac_date =  date( 'Y-m-d', $times); //$_POST['ac_date'];
+        $ac_hour =  date( 'H', $times); //$_POST['ac_hour'];
+        $ac_minute =  date( 'i', $times); // $_POST['ac_minute'];
         $ac_walk = $_POST['ac_walk'];
         $ac_run = $_POST['ac_run'];
         $ac_distance = $_POST['ac_distance'];
