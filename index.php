@@ -61,6 +61,30 @@
             <p>반려견 리스트</p>
             <p>아이디 : <input type="varchar" name="u_id"></p>
             <p><input type="submit" /></p>
+        </form> 
+        <form action="./activitydata.php?mode=add" method="POST">
+            <p>반려견 활동 정보 추가</p>
+            <p>반려견아이디 : <input type="varchar" name="d_id"></p>
+            <p>날짜 : <input type="varchar" name="ac_date"></p>
+            <p>시간: <input type="varchar" name="ac_hour"></p>
+            <p>분: <input type="varchar" name="ac_minute"></p>
+            <p>걷기 수: <input type="varchar" name="ac_walk"></p>
+            <p>뛰기 수: <input type="varchar" name="ac_run"></p>
+            <p>움직인 거리: <input type="varchar" name="ac_distance"></p>
+            <p>위치: <input type="varchar" name="ac_location"></p>
+            <p>심박수: <input type="varchar" name="ac_heart_rate"></p>
+            <p>디바이스 정보: <input type="varchar" name="ac_device_id"></p>
+            <p><input type="submit" /></p>
         </form>
+        <form action="./activitydata.php?mode=all" method="POST">
+            <p>반려견 활동 정보 리스트</p>
+            <p>아이디 : <input type="varchar" name="d_id"></p>
+            <p><input type="submit" /></p>
+        </form> 
+        <form action="./activitydata.php?mode=curr" method="POST">
+            <p>반려견 현재 활동 정보 보기 </p>
+            <p>아이디 : <input type="varchar" name="d_id"></p>
+            <p><input type="submit" /></p>
+        </form> 
     </body>
 </html>

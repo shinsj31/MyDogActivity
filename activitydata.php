@@ -1,6 +1,3 @@
-
-
-
 <?php
 
 try{
@@ -18,21 +15,14 @@ catch(Exception $e) {
 
 switch($_GET['mode']){
 /*
+    활동 정보 저장 불러오기
 
-$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_SILENT);  // 에러 출력하지 않음
-
-$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_WARNING); // Warning만 출력
-
-$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION); // 에러 출력
-
-    회원 가입 용 /
-    생성, 비밀번호 변경, 탈퇴
 */
-    case 'list': // 리스트 불러오기
-    //select * from user as u join dog as d on u.u_id = d.u_id and u.u_id = 'input';
-        $stmt = $dbh->prepare('SELECT * FROM user AS u JOIN dog AS d ON u.u_id = d.u_id AND u.u_id = :u_id');
-        $stmt->bindParam(':u_id',$u_id);
-        $u_id = $_POST['u_id'];
+    case 'all': // 날짜로 불러오기 JSON으로 반환
+        //$stmt = $dbh->prepare('SELECT * FROM user AS u JOIN dog AS d ON u.u_id = d.u_id AND u.u_id = :u_id');
+        $stmt = $dbh->prepare('SELECT * FROM activity_info WHERE d_id = :d_id');
+        $stmt->bindParam(':d_id',$d_id);
+        $d_id = $_POST['d_id'];
 
         try {
             $stmt->execute();
@@ -47,41 +37,17 @@ $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION); // 에러 출력
           $list = $stmt->fetchAll(PDO::FETCH_ASSOC);
          
           echo json_encode($list ,  JSON_UNESCAPED_UNICODE);
-
-        
         }
         else echo 'false';
 
         break;
-    case 'add': // 추가
-        $stmt = $dbh->prepare('INSERT INTO dog (d_name , u_id ) VALUES (:d_name, :u_id)');
-        $stmt->bindParam(':d_name',$d_name);
-        $stmt->bindParam(':u_id',$u_id);
-
-        $d_name = $_POST['d_name'];
-        $u_id = $_POST['u_id'];
-
-        try {
-          $stmt->execute();
-        }
-        catch (PDOException $e){
-          echo $e->getMessage();
-        }
-
-         $count = $stmt->rowCount();
-
-        echo $count > 0 ?  "success" : "false";
-        //header("Location: list.php");
-
-        break;
-    case 'delete': // 삭제
-        $stmt = $dbh->prepare('DELETE FROM dog WHERE u_id = :u_id AND d_id = :d_id ');
-        $stmt->bindParam(':u_id',$u_id);
+    case 'date': // 날짜로 불러오기 JSON으로 반환
+        //$stmt = $dbh->prepare('SELECT * FROM user AS u JOIN dog AS d ON u.u_id = d.u_id AND u.u_id = :u_id');
+        $stmt = $dbh->prepare('SELECT * FROM activity_info WHERE d_id = :d_id AND ac_date = :ac_date');
         $stmt->bindParam(':d_id',$d_id);
-
-        $u_id = $_POST['u_id'];
         $d_id = $_POST['d_id'];
-
+        $stmt->bindParam(':ac_date',$ac_date);
+        $ac_date = $_POST['ac_date'];
 
         try {
             $stmt->execute();
@@ -92,67 +58,81 @@ $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION); // 에러 출력
 
         $count = $stmt->rowCount();
 
-        echo $count > 0 ?  "success" : "false";
-
-        //header("Location: list.php");
-        break;
-    case 'update': // 정보 추가 또는 변경
-        $stmt = $dbh->prepare('UPDATE dog SET d_name = :d_name , d_breed = :d_breed , d_height = :d_height,
-          d_length = :d_length , d_weight = :d_weight , d_age = :d_age WHERE u_id = :u_id AND d_id = :d_id');
-        $stmt->bindParam(':u_id', $u_id);
-        $stmt->bindParam(':d_id', $d_id);
-        $stmt->bindParam(':d_name', $d_name);
-        $stmt->bindParam(':d_breed', $d_breed);
-        $stmt->bindParam(':d_height', $d_height);
-        $stmt->bindParam(':d_length', $d_length);
-        $stmt->bindParam(':d_weight', $d_weight);
-        $stmt->bindParam(':d_age', $d_age);
-
-        $u_id = $_POST['u_id'];
-        $d_id = $_POST['d_id'];
-        $d_name = $_POST['d_name'];
-        $d_breed = $_POST['d_breed'];
-        $d_height = $_POST['d_height'];
-        $d_length = $_POST['d_length'];
-        $d_weight = $_POST['d_weight'];
-        $d_age = $_POST['d_age'];
-
-
-        try {
-            $stmt->execute();
-        }
-        catch (PDOException $e){
-            echo $e->getMessage();
-		    }
-
-        $count = $stmt->rowCount();
-
-        echo $count > 0 ?  "success" : "false";
-
-        //header("Location: list.php?id={$_POST['id']}");
-        break;
-      case 'info': // 정보를 얻는다
-        $stmt = $dbh->prepare('SELECT * FROM dog WHERE d_id = :d_id');
-        $stmt->bindParam(':d_id', $d_id);
-
-        try {
-            $stmt->execute();
-        }
-        catch (PDOException $e){
-            echo $e->getMessage();
-        }
-
-        $count = $stmt->rowCount();
-
         if($count>0){
-            $list = $stmt->fetch(PDO::FETCH_ASSOC);
-            echo json_encode($list ,  JSON_UNESCAPED_UNICODE);
+          $list = $stmt->fetchAll(PDO::FETCH_ASSOC);
+         
+          echo json_encode($list ,  JSON_UNESCAPED_UNICODE);
         }
         else echo 'false';
 
         break;
+    case 'curr': // 오늘 정보 불러오기 JSON으로 반환
+         $stmt = $dbh->prepare('SELECT * FROM activity_info WHERE d_id = :d_id ORDER BY ac_id DESC limit 1');
+        $stmt->bindParam(':d_id',$d_id);
+        $d_id = $_POST['d_id'];
+    
+        try {
+            $stmt->execute();
+        }
+        catch (PDOException $e){
+            echo $e->getMessage();
+		}
+
+        $count = $stmt->rowCount();
+
+        if($count>0){
+          $list = $stmt->fetchAll(PDO::FETCH_ASSOC);
+         
+          echo json_encode($list ,  JSON_UNESCAPED_UNICODE);
+        }
+        else echo 'false';
+
+        break;
+    case 'add': // 활동 정보 추가
+        $stmt = $dbh->prepare('INSERT INTO activity_info 
+        (d_id , ac_date , ac_hour, ac_minute , ac_walk, ac_run , ac_distance , ac_heart_rate, ac_location ,ac_device_id ) 
+        VALUES (:d_id , :ac_date , :ac_hour, :ac_minute , :ac_walk, :ac_run , :ac_distance , :ac_heart_rate, :ac_location ,:ac_device_id )');
+       
+        $stmt->bindParam(':d_id',$d_id);
+        $stmt->bindParam(':ac_date',$ac_date);
+        $stmt->bindParam(':ac_hour',$ac_hour);
+        $stmt->bindParam(':ac_minute',$ac_minute);
+        $stmt->bindParam(':ac_walk',$ac_walk);
+        $stmt->bindParam(':ac_run',$ac_run);
+        $stmt->bindParam(':ac_distance',$ac_distance);
+        $stmt->bindParam(':ac_location',$ac_location);
+        $stmt->bindParam(':ac_heart_rate',$ac_heart_rate);
+        $stmt->bindParam(':ac_device_id',$ac_device_id);
+
+        $d_id = $_POST['d_id'];
+        $ac_date = $_POST['ac_date'];
+        $ac_hour = $_POST['ac_hour'];
+        $ac_minute = $_POST['ac_minute'];
+        $ac_walk = $_POST['ac_walk'];
+        $ac_run = $_POST['ac_run'];
+        $ac_distance = $_POST['ac_distance'];
+        $ac_location = $_POST['ac_location'];
+        $ac_heart_rate = $_POST['ac_heart_rate'];
+        $ac_device_id = $_POST['ac_device_id'];
+
+        try {
+          $stmt->execute();
+        }
+        catch (PDOException $e){
+          echo $e->getMessage();
+        }
+
+        $count = $stmt->rowCount();
+
+        echo $count > 0 ?  "success" : "false";
+
+
+        break;
+      
 
 
 }
 
 ?>
+  
+        
