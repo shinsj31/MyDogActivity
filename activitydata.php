@@ -90,8 +90,8 @@ switch($_GET['mode']){
         break;
     case 'add': // 활동 정보 추가
         $stmt = $dbh->prepare('INSERT INTO activity_info
-        (d_id , ac_date , ac_hour, ac_minute , ac_walk, ac_run , ac_distance , ac_heart_rate, ac_location ,ac_device_id )
-        VALUES (:d_id , :ac_date , :ac_hour, :ac_minute , :ac_walk, :ac_run , :ac_distance , :ac_heart_rate, :ac_location ,:ac_device_id )');
+        (d_id , ac_date , ac_hour, ac_minute , ac_walk, ac_run , ac_distance , ac_heart_rate, ac_location ,ac_device_id ,ac_posture )
+        VALUES (:d_id , :ac_date , :ac_hour, :ac_minute , :ac_walk, :ac_run , :ac_distance , :ac_heart_rate, :ac_location ,:ac_device_id , :ac_posture)');
 
         $stmt->bindParam(':d_id',$d_id);
         $stmt->bindParam(':ac_date',$ac_date);
@@ -103,6 +103,7 @@ switch($_GET['mode']){
         $stmt->bindParam(':ac_location',$ac_location);
         $stmt->bindParam(':ac_heart_rate',$ac_heart_rate);
         $stmt->bindParam(':ac_device_id',$ac_device_id);
+        $stmt->bindParam(':ac_posture',$ac_posture);
 
         $d_id = $_POST['d_id'];
         $times = time();
@@ -116,6 +117,7 @@ switch($_GET['mode']){
         $ac_location = $_POST['ac_location'];
         $ac_heart_rate = $_POST['ac_heart_rate'];
         $ac_device_id = $_POST['ac_device_id'];
+        $ac_posture = $_POST['ac_posture'];
 
         try {
           $stmt->execute();

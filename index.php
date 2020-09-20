@@ -74,6 +74,7 @@
             <p>걷기 수: <input type="varchar" name="ac_walk"></p>
             <p>뛰기 수: <input type="varchar" name="ac_run"></p>
             <p>움직인 거리: <input type="varchar" name="ac_distance"></p>
+            <p>자세: <input type="varchar" name="ac_posture"></p>
             <p>위치: <input type="varchar" name="ac_location"></p>
             <p>심박수: <input type="varchar" name="ac_heart_rate"></p>
             <p>디바이스 정보: <input type="varchar" name="ac_device_id"></p>
