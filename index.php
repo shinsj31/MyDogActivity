@@ -55,6 +55,7 @@
             <p>길이 : <input type="varchar" name="d_length"></p>
             <p>몸무게 : <input type="varchar" name="d_weight"></p>
             <p>나이 : <input type="varchar" name="d_age"></p>
+            <p>목표활동량 : <input type="varchar" name="d_goal_activity"></p>
             <p><input type="submit" /></p>
         </form>
         <form action="./doginfo.php?mode=list" method="POST">

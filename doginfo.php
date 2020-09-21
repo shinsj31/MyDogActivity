@@ -25,8 +25,6 @@ $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_WARNING); // Warning만 출�
 
 $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION); // 에러 출력
 
-    회원 가입 용 /
-    생성, 비밀번호 변경, 탈퇴
 */
     case 'list': // 리스트 불러오기
     //select * from user as u join dog as d on u.u_id = d.u_id and u.u_id = 'input';
@@ -98,7 +96,7 @@ $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION); // 에러 출력
         break;
     case 'update': // 정보 추가 또는 변경
         $stmt = $dbh->prepare('UPDATE dog SET d_name = :d_name , d_breed = :d_breed , d_height = :d_height,
-          d_length = :d_length , d_weight = :d_weight , d_age = :d_age WHERE u_id = :u_id AND d_id = :d_id');
+          d_length = :d_length , d_weight = :d_weight , d_age = :d_age , d_goal_activity = :d_goal_activity WHERE u_id = :u_id AND d_id = :d_id');
         $stmt->bindParam(':u_id', $u_id);
         $stmt->bindParam(':d_id', $d_id);
         $stmt->bindParam(':d_name', $d_name);
@@ -107,6 +105,7 @@ $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION); // 에러 출력
         $stmt->bindParam(':d_length', $d_length);
         $stmt->bindParam(':d_weight', $d_weight);
         $stmt->bindParam(':d_age', $d_age);
+        $stmt->bindParam(':d_goal_activity', $d_goal_activity);
 
         $u_id = $_POST['u_id'];
         $d_id = $_POST['d_id'];
@@ -116,7 +115,7 @@ $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION); // 에러 출력
         $d_length = $_POST['d_length'];
         $d_weight = $_POST['d_weight'];
         $d_age = $_POST['d_age'];
-
+        $d_goal_activity = $_POST['d_goal_activity'];
 
         try {
             $stmt->execute();
