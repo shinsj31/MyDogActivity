@@ -90,5 +90,10 @@
             <p>아이디 : <input type="varchar" name="d_id"></p>
             <p><input type="submit" /></p>
         </form> 
+         <form action="./activitydata.php?mode=today" method="POST">
+            <p>반려견 오늘 활동 정보 보기 </p>
+            <p>아이디 : <input type="varchar" name="d_id"></p>
+            <p><input type="submit" /></p>
+        </form> 
     </body>
 </html>

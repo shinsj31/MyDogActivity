@@ -66,7 +66,60 @@ switch($_GET['mode']){
         else echo 'false';
 
         break;
-    case 'curr': // 오늘 정보 불러오기 JSON으로 반환
+    case 'fromto': // 시작 날짜에서 끝 날짜까지 불러오기 JSON으로 반환
+        //$stmt = $dbh->prepare('SELECT * FROM user AS u JOIN dog AS d ON u.u_id = d.u_id AND u.u_id = :u_id');
+        /*
+        $stmt = $dbh->prepare('SELECT * FROM activity_info WHERE d_id = :d_id AND ac_date = :ac_date');
+        $stmt->bindParam(':d_id',$d_id);
+        $d_id = $_POST['d_id'];
+        $stmt->bindParam(':ac_date',$ac_date);
+        $ac_date = $_POST['ac_date'];
+
+        try {
+            $stmt->execute();
+        }
+        catch (PDOException $e){
+            echo $e->getMessage();
+		}
+
+        $count = $stmt->rowCount();
+
+        if($count>0){
+          $list = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+          echo json_encode($list ,  JSON_UNESCAPED_UNICODE);
+        }
+        else echo 'false';
+        */
+        break;
+    case 'today': // 오늘 총 정보 불러오기 JSON으로 반환
+        $stmt = $dbh->prepare('SELECT * FROM activity_info WHERE d_id = :d_id AND ac_date = :ac_date');
+        $stmt->bindParam(':d_id',$d_id);
+        $d_id = $_POST['d_id'];
+
+        $stmt->bindParam(':ac_date',$ac_date);
+        $times = time();
+        date_default_timezone_set("Asia/Seoul"); // 한국 시간으로 변경
+        $ac_date =  date( 'Y-m-d', $times); //$_POST['ac_date'];
+
+        try {
+            $stmt->execute();
+        }
+        catch (PDOException $e){
+            echo $e->getMessage();
+		}
+
+        $count = $stmt->rowCount();
+
+        if($count>0){
+          $list = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+          echo json_encode($list ,  JSON_UNESCAPED_UNICODE);
+        }
+        else echo 'false';
+
+        break;
+    case 'curr': // 현재 정보 불러오기 JSON으로 반환
          $stmt = $dbh->prepare('SELECT * FROM activity_info WHERE d_id = :d_id ORDER BY ac_id DESC limit 1');
         $stmt->bindParam(':d_id',$d_id);
         $d_id = $_POST['d_id'];
