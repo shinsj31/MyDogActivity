@@ -39,25 +39,36 @@ $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION); // 에러 출력
             echo $e->getMessage();
 		}
 
-          $count = $stmt->rowCount();
+         $count = $stmt->rowCount();
 
         if($count>0){
           $list = $stmt->fetchAll(PDO::FETCH_ASSOC);
          
-          echo json_encode($list ,  JSON_UNESCAPED_UNICODE);
-
-        
+          echo json_encode($list ,  JSON_UNESCAPED_UNICODE); 
         }
         else echo 'false';
 
         break;
     case 'add': // 추가
-        $stmt = $dbh->prepare('INSERT INTO dog (d_name , u_id ) VALUES (:d_name, :u_id)');
-        $stmt->bindParam(':d_name',$d_name);
+        $stmt = $dbh->prepare('INSERT INTO dog (u_id, d_name, d_breed, d_height , d_length , d_weight , d_age, d_goal_activity ) VALUES (:u_id ,  :d_name, :d_breed, :d_height , :d_length , :d_weight , :d_age, :d_goal_activity) ');
+        
         $stmt->bindParam(':u_id',$u_id);
+        $stmt->bindParam(':d_name', $d_name);
+        $stmt->bindParam(':d_breed', $d_breed);
+        $stmt->bindParam(':d_height', $d_height);
+        $stmt->bindParam(':d_length', $d_length);
+        $stmt->bindParam(':d_weight', $d_weight);
+        $stmt->bindParam(':d_age', $d_age);
+        $stmt->bindParam(':d_goal_activity', $d_goal_activity);
 
-        $d_name = $_POST['d_name'];
         $u_id = $_POST['u_id'];
+        $d_name = $_POST['d_name'];
+        $d_breed = $_POST['d_breed'];
+        $d_height = $_POST['d_height'];
+        $d_length = $_POST['d_length'];
+        $d_weight = $_POST['d_weight'];
+        $d_age = $_POST['d_age'];
+        $d_goal_activity = $_POST['d_goal_activity'];
 
         try {
           $stmt->execute();
@@ -66,10 +77,37 @@ $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION); // 에러 출력
           echo $e->getMessage();
         }
 
-         $count = $stmt->rowCount();
+        $count = $stmt->rowCount();
+        
+        if($count == 0){
+            echo  "false";
+            break;
+		}
+      
+    
 
-        echo $count > 0 ?  "success" : "false";
-        //header("Location: list.php");
+        //ORDER BY ac_id DESC limit 1
+
+        $stmt = $dbh->prepare('SELECT * FROM user AS u JOIN dog AS d ON u.u_id = d.u_id AND u.u_id = :u_id ORDER BY d_id DESC limit 1');
+        $stmt->bindParam(':u_id',$u_id);
+        $u_id = $_POST['u_id'];
+
+        try {
+            $stmt->execute();
+        }
+        catch (PDOException $e){
+            echo $e->getMessage();
+		}
+
+        $count = $stmt->rowCount();
+
+        if($count>0){
+          $list = $stmt->fetchAll(PDO::FETCH_ASSOC);
+          echo json_encode($list ,  JSON_UNESCAPED_UNICODE); 
+        }
+        else echo 'false';
+
+
 
         break;
     case 'delete': // 삭제
@@ -126,7 +164,34 @@ $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION); // 에러 출력
 
         $count = $stmt->rowCount();
 
-        echo $count > 0 ?  "success" : "false";
+        if($count == 0){
+            echo  "false";
+            break;
+		}
+
+       
+        $stmt = $dbh->prepare('SELECT * FROM dog WHERE u_id = :u_id AND d_id = :d_id ');
+        $stmt->bindParam(':u_id', $u_id);
+        $stmt->bindParam(':d_id', $d_id);
+        $u_id = $_POST['u_id'];
+        $d_id = $_POST['d_id'];
+
+        try {
+            $stmt->execute();
+        }
+        catch (PDOException $e){
+            echo $e->getMessage();
+		}
+
+        $count = $stmt->rowCount();
+
+        if($count>0){
+          $list = $stmt->fetchAll(PDO::FETCH_ASSOC);
+          echo json_encode($list ,  JSON_UNESCAPED_UNICODE); 
+        }
+        else echo 'false';
+
+
 
         //header("Location: list.php?id={$_POST['id']}");
         break;

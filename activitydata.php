@@ -120,7 +120,7 @@ switch($_GET['mode']){
 
         break;
     case 'curr': // 현재 정보 불러오기 JSON으로 반환
-         $stmt = $dbh->prepare('SELECT * FROM activity_info WHERE d_id = :d_id ORDER BY ac_id DESC limit 1');
+        $stmt = $dbh->prepare('SELECT * FROM activity_info WHERE d_id = :d_id ORDER BY ac_id DESC limit 1');
         $stmt->bindParam(':d_id',$d_id);
         $d_id = $_POST['d_id'];
 
