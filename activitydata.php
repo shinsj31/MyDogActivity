@@ -185,7 +185,57 @@ switch($_GET['mode']){
 
 
         break;
+         case 'random': // 활동 정보 추가
+         
+        for($i=0; $i<1440; $i=$i+1)
+	    {
+		  $stmt = $dbh->prepare('INSERT INTO activity_info
+        (d_id , ac_date , ac_hour, ac_minute , ac_walk, ac_run , ac_distance , ac_heart_rate, ac_location ,ac_device_id ,ac_posture )
+        VALUES (:d_id , :ac_date , :ac_hour, :ac_minute , :ac_walk, :ac_run , :ac_distance , :ac_heart_rate, :ac_location ,:ac_device_id , :ac_posture)');
 
+        $stmt->bindParam(':d_id',$d_id);
+        $stmt->bindParam(':ac_date',$ac_date);
+        $stmt->bindParam(':ac_hour',$ac_hour);
+        $stmt->bindParam(':ac_minute',$ac_minute);
+        $stmt->bindParam(':ac_walk',$ac_walk);
+        $stmt->bindParam(':ac_run',$ac_run);
+        $stmt->bindParam(':ac_distance',$ac_distance);
+        $stmt->bindParam(':ac_location',$ac_location);
+        $stmt->bindParam(':ac_heart_rate',$ac_heart_rate);
+        $stmt->bindParam(':ac_device_id',$ac_device_id);
+        $stmt->bindParam(':ac_posture',$ac_posture);
+       
+
+        $d_id = $_POST['d_id'];
+        $times = time();
+        date_default_timezone_set("Asia/Seoul"); // 한국 시간으로 변경
+        $ac_date =  date( 'Y-m-d', $times); //$_POST['ac_date'];
+        $ac_hour =  $i/60;  //$_POST['ac_hour'];
+        $ac_minute =  $i%60; // $_POST['ac_minute'];
+
+        $ac_walk = rand(0,10);
+        $ac_run = rand(0,10);
+        $ac_distance = rand(0,10);
+        $ac_location = rand(0,10);
+        $ac_heart_rate = rand(0,10);
+        $ac_device_id =1;
+        $ac_posture = 1;
+
+        try {
+          $stmt->execute();
+        }
+        catch (PDOException $e){
+          echo $e->getMessage();
+        }
+
+        $count = $stmt->rowCount();
+
+        echo $count > 0 ?  "success" : "false";
+	    }
+      
+
+
+        break;
 
 
 }
