@@ -44,6 +44,12 @@
 
             <p><input type="submit" /></p>
         </form>
+        <form action="./doginfo.php?mode=delete" method="POST">
+            <p>반려견 제거</p>
+            <p>아이디 : <input type="varchar" name="u_id"></p>
+             <p>개_아이디 : <input type="varchar" name="d_id"></p>
+            <p><input type="submit" /></p>
+        </form>
         <form action="./doginfo.php?mode=update" method="POST">
             <p>반려견 정보 변경</p>
             <p>아이디 : <input type="varchar" name="u_id"></p>
