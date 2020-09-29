@@ -20,7 +20,7 @@ switch($_GET['mode']){
 */
     case 'get': // 날짜로 불러오기 JSON으로 반환
         //$stmt = $dbh->prepare('SELECT * FROM user AS u JOIN dog AS d ON u.u_id = d.u_id AND u.u_id = :u_id');
-        $stmt = $dbh->prepare('SELECT * FROM result_activity WHERE d_id = :d_id');
+        $stmt = $dbh->prepare('SELECT * FROM result_activity WHERE d_id = :d_id ORDER BY ac_date');
         $stmt->bindParam(':d_id',$d_id);
         $d_id = $_POST['d_id'];
 
