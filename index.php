@@ -113,5 +113,18 @@
            <p>날짜 'Y-m-d': <input type="varchar" name="ac_date"></p>
            <p><input type="submit" /></p>
        </form>
+
+       <form action="./result_activity.php?mode=get" method="POST">
+          <p>반려견 활동 전체 결과 보기 </p>
+          <p>아이디 : <input type="varchar" name="d_id"></p>
+          <p><input type="submit" /></p>
+      </form>
+     <form action="./result_activity.php?mode=random" method="POST">
+        <p>반려견 활동 결과 추가하기 </p>
+        <p>아이디 : <input type="varchar" name="d_id"></p>
+        <p>날짜 'Y-m-d': <input type="varchar" name="ac_date"></p>
+        <p><input type="submit" /></p>
+    </form>
+
     </body>
 </html>
