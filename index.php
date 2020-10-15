@@ -97,7 +97,7 @@
             <p>아이디 : <input type="varchar" name="d_id"></p>
             <p><input type="submit" /></p>
         </form>
-        <form action="./activitydata.php?mode=today" method="POST">
+        <form action="./activitydata.php?mode=date" method="POST">
            <p>반려견 해당 활동 정보 보기 </p>
            <p>아이디 : <input type="varchar" name="d_id"></p>
           <p>날짜 'Y-m-d': <input type="varchar" name="ac_date"></p>
