@@ -40,14 +40,20 @@
         <form action="./doginfo.php?mode=add" method="POST">
             <p>반려견 추가</p>
             <p>아이디 : <input type="varchar" name="u_id"></p>
-            <p>개이름 : <input type="varchar" name="d_name"></p>
-
+            <p>이름 : <input type="varchar" name="d_name"></p>
+            <p>견종 : <input type="varchar" name="d_breed"></p>
+            <p>키 : <input type="varchar" name="d_height"></p>
+            <p>길이 : <input type="varchar" name="d_length"></p>
+            <p>몸무게 : <input type="varchar" name="d_weight"></p>
+            <p>나이 : <input type="varchar" name="d_age"></p>
+            <p>목표활동량 : <input type="varchar" name="d_goal_activity"></p>
             <p><input type="submit" /></p>
         </form>
         <form action="./doginfo.php?mode=delete" method="POST">
             <p>반려견 제거</p>
             <p>아이디 : <input type="varchar" name="u_id"></p>
-             <p>개_아이디 : <input type="varchar" name="d_id"></p>
+            <p>반려견아이디 : <input type="varchar" name="d_id"></p>
+
             <p><input type="submit" /></p>
         </form>
         <form action="./doginfo.php?mode=update" method="POST">

@@ -54,7 +54,7 @@ switch($_GET['mode']){
         }
         catch (PDOException $e){
             echo $e->getMessage();
-		}
+		        }
 
         $count = $stmt->rowCount();
 

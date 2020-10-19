@@ -75,7 +75,7 @@ $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION); // 에러 출력
         $times = time();
         date_default_timezone_set("Asia/Seoul"); // 한국 시간으로 변경
         $d_join_date =  date( 'Y-m-d', $times); //$_POST['ac_date'];
-      
+
 
         try {
           $stmt->execute();
@@ -89,7 +89,7 @@ $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION); // 에러 출력
         if($count == 0){
             echo  "false";
             break;
-		}
+		    }
 
 
 
@@ -104,15 +104,40 @@ $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION); // 에러 출력
         }
         catch (PDOException $e){
             echo $e->getMessage();
-		}
+		    }
 
         $count = $stmt->rowCount();
 
         if($count>0){
           $list = $stmt->fetchAll(PDO::FETCH_ASSOC);
-          echo json_encode($list ,  JSON_UNESCAPED_UNICODE);
+          $json = json_encode($list ,  JSON_UNESCAPED_UNICODE);
+
+
+          $stmt = $dbh->prepare('INSERT INTO WEIGHT_CHANGE (d_id, d_weight , wc_date ) VALUES (:d_id, :d_weight , :wc_date) ');
+          $stmt->bindParam(':d_id', $d_id);
+          $stmt->bindParam(':d_weight', $d_weight);
+          $stmt->bindParam(':wc_date', $wc_date);
+          $d_id = json_decode($json)[0]->d_id;
+          $d_weight = $_POST['d_weight'];
+          $times = time();
+          date_default_timezone_set("Asia/Seoul"); // 한국 시간으로 변경
+          $wc_date =  date( 'Y-m-d', $times); //$_POST['ac_date'];
+
+                  try {
+                      $stmt->execute();
+                  }
+                  catch (PDOException $e){
+                      echo $e->getMessage();
+                  }
+          $count = $stmt->rowCount();
+            if($count>0)
+             echo $d_id;
         }
-        else echo 'false';
+        else {
+            echo 'false!';
+            break;
+        }
+
 
 
 
@@ -162,6 +187,7 @@ $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION); // 에러 출력
         $d_age = $_POST['d_age'];
         $d_goal_activity = $_POST['d_goal_activity'];
 
+
         try {
             $stmt->execute();
         }
@@ -174,7 +200,25 @@ $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION); // 에러 출력
         if($count == 0){
             echo  "false";
             break;
-		}
+		    }
+        $stmt = $dbh->prepare('INSERT INTO WEIGHT_CHANGE (d_id, d_weight , wc_date ) VALUES (:d_id, :d_weight , :wc_date) ON DUPLICATE KEY UPDATE d_weight=:d_weight');
+        $stmt->bindParam(':d_id', $d_id);
+        $stmt->bindParam(':d_weight', $d_weight);
+        $stmt->bindParam(':wc_date', $wc_date);
+        $d_id = $_POST['d_id'];
+        $d_weight = $_POST['d_weight'];
+        $times = time();
+        date_default_timezone_set("Asia/Seoul"); // 한국 시간으로 변경
+        $wc_date =  date( 'Y-m-d', $times); //$_POST['ac_date'];
+
+                try {
+                    $stmt->execute();
+                }
+                catch (PDOException $e){
+                    echo $e->getMessage();
+        		    }
+
+
 
 
         $stmt = $dbh->prepare('SELECT * FROM dog WHERE u_id = :u_id AND d_id = :d_id ');
@@ -188,7 +232,7 @@ $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION); // 에러 출력
         }
         catch (PDOException $e){
             echo $e->getMessage();
-		}
+  		}
 
         $count = $stmt->rowCount();
 
