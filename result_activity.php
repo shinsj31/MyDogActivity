@@ -133,25 +133,25 @@ switch($_GET['mode']){
              $d_id = $_POST['d_id'];
              $ac_date = $_POST['ac_date'];
              $res_walk_ph =
-             ((String)rand(1000,2000).",".(String)rand(1000,2000).",".(String)rand(1000,2000).",".(String)rand(1000,2000).",".(String)rand(1000,2000)
-             .",".(String)rand(1000,2000).",".(String)rand(1000,2000).",".(String)rand(1000,2000).",".(String)rand(1000,2000).",".(String)rand(1000,2000)
-             .",".(String)rand(1000,2000).",".(String)rand(1000,2000).",".(String)rand(1000,2000).",".(String)rand(1000,2000).",".(String)rand(1000,2000)
-             .",".(String)rand(1000,2000).",".(String)rand(1000,2000).",".(String)rand(1000,2000).",".(String)rand(1000,2000).",".(String)rand(1000,2000)
-             .",".(String)rand(1000,2000).",".(String)rand(1000,2000).",".(String)rand(1000,2000).",".(String)rand(1000,2000));
+             ((String)rand(0,20).",".(String)rand(0,20).",".(String)rand(0,20).",".(String)rand(0,20).",".(String)rand(0,20)
+             .",".(String)rand(0,20).",".(String)rand(20,100).",".(String)rand(100,200).",".(String)rand(100,200).",".(String)rand(100,200)
+             .",".(String)rand(100,200).",".(String)rand(100,200).",".(String)rand(100,200).",".(String)rand(100,200).",".(String)rand(100,200)
+             .",".(String)rand(100,200).",".(String)rand(100,200).",".(String)rand(100,200).",".(String)rand(100,200).",".(String)rand(100,200)
+            .",".(String)rand(50,100).",".(String)rand(50,100).",".(String)rand(0,20).",".(String)rand(0,20));
 
              $res_run_ph =
-             ((String)rand(1000,2000).",".(String)rand(1000,2000).",".(String)rand(1000,2000).",".(String)rand(1000,2000).",".(String)rand(1000,2000)
-             .",".(String)rand(1000,2000).",".(String)rand(1000,2000).",".(String)rand(1000,2000).",".(String)rand(1000,2000).",".(String)rand(1000,2000)
-             .",".(String)rand(1000,2000).",".(String)rand(1000,2000).",".(String)rand(1000,2000).",".(String)rand(1000,2000).",".(String)rand(1000,2000)
-             .",".(String)rand(1000,2000).",".(String)rand(1000,2000).",".(String)rand(1000,2000).",".(String)rand(1000,2000).",".(String)rand(1000,2000)
-             .",".(String)rand(1000,2000).",".(String)rand(1000,2000).",".(String)rand(1000,2000).",".(String)rand(1000,2000));
+             ((String)rand(0,20).",".(String)rand(0,20).",".(String)rand(0,20).",".(String)rand(0,20).",".(String)rand(0,20)
+             .",".(String)rand(0,20).",".(String)rand(20,100).",".(String)rand(100,200).",".(String)rand(100,200).",".(String)rand(100,200)
+             .",".(String)rand(100,200).",".(String)rand(100,200).",".(String)rand(100,200).",".(String)rand(100,200).",".(String)rand(100,200)
+             .",".(String)rand(100,200).",".(String)rand(100,200).",".(String)rand(100,200).",".(String)rand(100,200).",".(String)rand(100,200)
+             .",".(String)rand(50,100).",".(String)rand(50,100).",".(String)rand(0,20).",".(String)rand(0,20));
 
              $res_move_ph =
-             ((String)rand(1000,2000).",".(String)rand(1000,2000).",".(String)rand(1000,2000).",".(String)rand(1000,2000).",".(String)rand(1000,2000)
-             .",".(String)rand(1000,2000).",".(String)rand(1000,2000).",".(String)rand(1000,2000).",".(String)rand(1000,2000).",".(String)rand(1000,2000)
-             .",".(String)rand(1000,2000).",".(String)rand(1000,2000).",".(String)rand(1000,2000).",".(String)rand(1000,2000).",".(String)rand(1000,2000)
-             .",".(String)rand(1000,2000).",".(String)rand(1000,2000).",".(String)rand(1000,2000).",".(String)rand(1000,2000).",".(String)rand(1000,2000)
-             .",".(String)rand(1000,2000).",".(String)rand(1000,2000).",".(String)rand(1000,2000).",".(String)rand(1000,2000));
+             ((String)rand(0,20).",".(String)rand(0,20).",".(String)rand(0,20).",".(String)rand(0,20).",".(String)rand(0,20)
+             .",".(String)rand(0,20).",".(String)rand(20,100).",".(String)rand(100,200).",".(String)rand(100,200).",".(String)rand(100,200)
+             .",".(String)rand(100,200).",".(String)rand(100,200).",".(String)rand(100,200).",".(String)rand(100,200).",".(String)rand(100,200)
+             .",".(String)rand(100,200).",".(String)rand(100,200).",".(String)rand(100,200).",".(String)rand(100,200).",".(String)rand(100,200)
+             .",".(String)rand(50,100).",".(String)rand(50,100).",".(String)rand(0,20).",".(String)rand(0,20));
 
              $res_avg_walk_ph =
              ((String)rand(1000,2000).",".(String)rand(1000,2000).",".(String)rand(1000,2000).",".(String)rand(1000,2000).",".(String)rand(1000,2000)
@@ -175,20 +175,21 @@ switch($_GET['mode']){
              .",".(String)rand(1000,2000).",".(String)rand(1000,2000).",".(String)rand(1000,2000).",".(String)rand(1000,2000));
 
              $res_avg_heart_ph =
-             ((String)rand(1000,2000).",".(String)rand(1000,2000).",".(String)rand(1000,2000).",".(String)rand(1000,2000).",".(String)rand(1000,2000)
-             .",".(String)rand(1000,2000).",".(String)rand(1000,2000).",".(String)rand(1000,2000).",".(String)rand(1000,2000).",".(String)rand(1000,2000)
-             .",".(String)rand(1000,2000).",".(String)rand(1000,2000).",".(String)rand(1000,2000).",".(String)rand(1000,2000).",".(String)rand(1000,2000)
-             .",".(String)rand(1000,2000).",".(String)rand(1000,2000).",".(String)rand(1000,2000).",".(String)rand(1000,2000).",".(String)rand(1000,2000)
-             .",".(String)rand(1000,2000).",".(String)rand(1000,2000).",".(String)rand(1000,2000).",".(String)rand(1000,2000));
+             ((String)rand(55,65).",".(String)rand(55,65).",".(String)rand(55,65).",".(String)rand(55,65).",".(String)rand(55,65)
+             .",".(String)rand(60,65).",".(String)rand(60,65).",".(String)rand(60,65).",".(String)rand(62,65).",".(String)rand(65,67)
+               .",".(String)rand(64,68).",".(String)rand(60,65).",".(String)rand(65,68).",".(String)rand(65,67).",".(String)rand(65,67)
+                 .",".(String)rand(62,64).",".(String)rand(65,68).",".(String)rand(60,68).",".(String)rand(65,67).",".(String)rand(63,66)
+             .",".(String)rand(57,65).",".(String)rand(55,65).",".(String)rand(55,65).",".(String)rand(55,65));
 
-             $res_all_wark = rand(1000,2000);
-             $res_avg_daily_walk = rand(1000,2000);
-             $res_avg_daily_run = rand(1000,2000);
-             $res_avg_daily_move = rand(1000,2000);
-             $res_avg_daily_heart = rand(1000,2000);
-             $res_move_time = rand(1000,2000);
-             $res_rest_time = rand(1000,2000);
-             $res_sleep_time = rand(1000,2000);
+
+             $res_avg_daily_walk = rand(2500,3500);
+             $res_avg_daily_run = rand(2500,3500);
+             $res_avg_daily_move = $res_avg_daily_walk + $res_avg_daily_run;
+                $res_all_wark = $res_avg_daily_move;
+             $res_avg_daily_heart = rand(61,65);
+             $res_move_time = rand(200,300);
+             $res_rest_time = rand(200,300);
+             $res_sleep_time = rand(200,300);
 
 
       try {

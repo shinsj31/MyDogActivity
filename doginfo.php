@@ -49,6 +49,29 @@ $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION); // 에러 출력
         else echo 'false';
 
         break;
+    case 'weight': // 리스트 불러오기
+        //select * from user as u join dog as d on u.u_id = d.u_id and u.u_id = 'input';
+        $stmt = $dbh->prepare('SELECT * FROM WEIGHT_CHANGE WHERE d_id = :d_id');
+        $stmt->bindParam(':d_id',$d_id);
+        $d_id = $_POST['d_id'];
+
+        try {
+            $stmt->execute();
+        }
+        catch (PDOException $e){
+            echo $e->getMessage();
+        }
+
+         $count = $stmt->rowCount();
+
+        if($count>0){
+          $list = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+          echo json_encode($list ,  JSON_UNESCAPED_UNICODE);
+        }
+        else echo 'false';
+
+            break;
     case 'add': // 추가
         $stmt = $dbh->prepare('INSERT INTO dog (u_id, d_name, d_breed, d_height , d_length , d_weight , d_age, d_goal_activity, d_join_date ) VALUES (:u_id ,  :d_name, :d_breed, :d_height , :d_length , :d_weight , :d_age, :d_goal_activity , :d_join_date) ');
 

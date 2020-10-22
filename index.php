@@ -56,6 +56,11 @@
 
             <p><input type="submit" /></p>
         </form>
+        <form action="./doginfo.php?mode=weight" method="POST">
+            <p>반려견 몸무게 변화</p>
+            <p>반려견아이디 : <input type="varchar" name="d_id"></p>
+            <p><input type="submit" /></p>
+        </form>
         <form action="./doginfo.php?mode=update" method="POST">
             <p>반려견 정보 변경</p>
             <p>아이디 : <input type="varchar" name="u_id"></p>
@@ -115,12 +120,12 @@
             <p><input type="submit" /></p>
         </form>
          <form action="./activitydata.php?mode=random" method="POST">
-            <p>반려견 랜점 활동 정보 삽입 </p>
+            <p>반려견 랜덤 활동 정보 삽입 오늘 </p>
             <p>아이디 : <input type="varchar" name="d_id"></p>
             <p><input type="submit" /></p>
         </form>
         <form action="./activitydata.php?mode=random_day" method="POST">
-           <p>반려견 랜점 활동 정보 삽입 </p>
+           <p>반려견 랜덤 활동 정보 삽입 </p>
            <p>아이디 : <input type="varchar" name="d_id"></p>
            <p>날짜 'Y-m-d': <input type="varchar" name="ac_date"></p>
            <p><input type="submit" /></p>

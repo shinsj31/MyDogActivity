@@ -67,30 +67,7 @@ switch($_GET['mode']){
 
         break;
     case 'fromto': // 시작 날짜에서 끝 날짜까지 불러오기 JSON으로 반환
-        //$stmt = $dbh->prepare('SELECT * FROM user AS u JOIN dog AS d ON u.u_id = d.u_id AND u.u_id = :u_id');
-        /*
-        $stmt = $dbh->prepare('SELECT * FROM activity_info WHERE d_id = :d_id AND ac_date = :ac_date');
-        $stmt->bindParam(':d_id',$d_id);
-        $d_id = $_POST['d_id'];
-        $stmt->bindParam(':ac_date',$ac_date);
-        $ac_date = $_POST['ac_date'];
 
-        try {
-            $stmt->execute();
-        }
-        catch (PDOException $e){
-            echo $e->getMessage();
-		}
-
-        $count = $stmt->rowCount();
-
-        if($count>0){
-          $list = $stmt->fetchAll(PDO::FETCH_ASSOC);
-
-          echo json_encode($list ,  JSON_UNESCAPED_UNICODE);
-        }
-        else echo 'false';
-        */
         break;
     case 'today': // 오늘 총 정보 불러오기 JSON으로 반환
         $stmt = $dbh->prepare('SELECT * FROM activity_info WHERE d_id = :d_id AND ac_date = :ac_date');
@@ -215,15 +192,58 @@ switch($_GET['mode']){
         $ac_date = $_POST['ac_date'];
       }
       $ac_hour =  $i/60;  //$_POST['ac_hour'];
+
       $ac_minute =  $i%60; // $_POST['ac_minute'];
 
-      $ac_walk = rand(0,10);
-      $ac_run = rand(0,10);
-      $ac_distance = rand(0,10);
-      $ac_location = rand(0,10);
-      $ac_heart_rate = rand(0,10);
-      $ac_device_id =1;
-      $ac_posture = 1;
+      $posture = array('move' , 'stand' ,'stop', ' sitdown', 'lieside', 'lieupsdown', );
+
+        if($ac_hour == 9 || $ac_hour == 19 ) {
+          $ac_walk = rand(5,10);
+          $ac_run = rand(3,17);
+          $ac_distance = 0;
+          $ac_location = 0;
+          $ac_device_id =1;
+          $ac_posture = $posture[0];
+          $ac_heart_rate = rand(65,80);
+        }
+        else if($ac_hour >= 7 && $ac_hour < 22 ){
+          $ac_walk = rand(0,10);
+          $ac_run = rand(0,7);
+          $ac_distance = 0;
+          $ac_location = 0;
+          $ac_device_id =1;
+
+          // "stop", "move", " sitdown", "lieside", "lieupsdown", "stand"
+          if( $ac_walk + $ac_run > 5 ){
+              $ac_posture = $posture[0];
+              $ac_heart_rate = rand(65,80);
+          }
+          else if( $ac_walk +   $ac_run > 2 ){
+              $ac_posture = $posture[1];
+              $ac_heart_rate = rand(60,75);
+          }
+          else{
+              $ac_posture = $posture[rand(2,5)];
+              $ac_heart_rate = rand(55,70);
+          }
+        }
+        else{
+          if($ac_minute % 3 == 0)
+            $ac_walk = rand(0,1);
+            else
+              $ac_walk = 0;
+          $ac_run = 0;
+          $ac_distance = rand(0,10);
+          $ac_location = rand(0,10);
+          $ac_heart_rate = rand(55,70);
+
+          $ac_posture = $posture[rand(2,5)];
+
+              $ac_device_id =1;
+        }
+
+
+
 
       try {
         $stmt->execute();
